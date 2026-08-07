@@ -1,0 +1,323 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background: #0f1117;
+  color: #f5f5f5;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #0f1117;
+}
+
+/* Header */
+
+.header {
+  height: 70px;
+  border-bottom: 1px solid #262932;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 28px;
+
+  background: #111318;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #f5f5f5;
+  color: #111318;
+
+  font-weight: 800;
+  font-size: 20px;
+}
+
+.logo h1 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.logo span {
+  font-size: 12px;
+  color: #8b8f9b;
+}
+
+.status {
+  font-size: 13px;
+  color: #a7abb5;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  background: #4ade80;
+  border-radius: 50%;
+}
+
+
+/* Chat */
+
+.chat {
+  flex: 1;
+
+  width: 100%;
+  max-width: 850px;
+
+  margin: 0 auto;
+
+  padding: 40px 20px 140px;
+}
+
+.welcome {
+  min-height: 55vh;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+}
+
+.welcome-icon {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.welcome h2 {
+  font-size: 30px;
+  margin: 0 0 10px;
+}
+
+.welcome p {
+  color: #8d929e;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.suggestions {
+  display: flex;
+  gap: 10px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.suggestions button {
+  background: #181b22;
+  border: 1px solid #2b2e37;
+
+  color: #c8cbd2;
+
+  padding: 10px 14px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.suggestions button:hover {
+  background: #22252d;
+}
+
+
+/* Messages */
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.message {
+  display: flex;
+  gap: 14px;
+
+  line-height: 1.6;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #20232b;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.user .avatar {
+  background: #f5f5f5;
+  color: #111;
+}
+
+.message-content {
+  max-width: 700px;
+  white-space: pre-wrap;
+}
+
+
+/* Input */
+
+.input-container {
+  position: fixed;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: 20px;
+
+  background: linear-gradient(
+    transparent,
+    #0f1117 30%
+  );
+}
+
+.input-box {
+  max-width: 800px;
+
+  margin: auto;
+
+  display: flex;
+
+  background: #181b22;
+
+  border: 1px solid #30333d;
+
+  border-radius: 16px;
+
+  padding: 8px 8px 8px 16px;
+
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.input-box input {
+  flex: 1;
+
+  background: transparent;
+
+  border: none;
+  outline: none;
+
+  color: white;
+
+  font-size: 15px;
+}
+
+.input-box input::placeholder {
+  color: #777c88;
+}
+
+.input-box button {
+  width: 38px;
+  height: 38px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  background: #f5f5f5;
+
+  color: #111;
+
+  font-size: 20px;
+
+  cursor: pointer;
+}
+
+.input-box button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.disclaimer {
+  text-align: center;
+
+  font-size: 11px;
+
+  color: #686d78;
+
+  margin: 8px 0 0;
+}
+
+
+/* Typing */
+
+.typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.typing span {
+  width: 6px;
+  height: 6px;
+
+  background: #888;
+
+  border-radius: 50%;
+
+  animation: bounce 1.2s infinite;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+  0%, 60%, 100% {
+    transform: translateY(0);
+  }
+
+  30% {
+    transform: translateY(-5px);
+  }
+}
