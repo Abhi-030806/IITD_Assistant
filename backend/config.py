@@ -3,6 +3,7 @@ import os
 # Model Configurations
 LLM_MODEL = os.getenv("LLM_MODEL", "llama3.1:8b")
 EMBED_MODEL = os.getenv("EMBED_MODEL", "nomic-embed-text")
+TOP_K = int(os.getenv("TOP_K", "5"))
 
 # Path Configurations
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

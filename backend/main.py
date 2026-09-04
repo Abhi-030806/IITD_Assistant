@@ -32,26 +32,30 @@ def health_check():
 @app.post("/chat")
 def chat(req: ChatRequest):
 
-    results = retrieve(req.message)
+    retrieval = retrieve(req.message)
+    sources = retrieval.get("sources", [])
 
-    context = ""
+    context_blocks = []
+    for src in sources:
+        context_blocks.append(
+            f"[Source {src['id']}] File: {src['file']} (Page {src['page']})\nContent: {src['text']}"
+        )
 
-    for doc in results["documents"][0]:
-        context += doc + "\n\n"
+    context_str = "\n\n".join(context_blocks)
 
-    prompt = f"""
-You are an IIT Delhi Assistant.
+    prompt = f"""You are the official IIT Delhi AI Assistant.
 
-Answer ONLY from the provided context.
+Answer the user's question clearly, thoroughly, and accurately using ONLY the provided document context below.
 
-If the answer is not present in the context, reply exactly:
-
+INSTRUCTIONS:
+1. Whenever you state a fact, rule, or guideline from the context, cite the relevant source in your answer using bracket notation like [Source 1] or [Source 2].
+2. If the user's question cannot be answered from the provided context, reply exactly:
 "I couldn't find that information in the uploaded IITD documents."
 
-Context:
-{context}
+CONTEXT:
+{context_str}
 
-Question:
+USER QUESTION:
 {req.message}
 """
 
@@ -66,5 +70,6 @@ Question:
     )
 
     return {
-        "reply": response["message"]["content"]
+        "reply": response["message"]["content"],
+        "sources": sources
     }
