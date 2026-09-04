@@ -2,7 +2,7 @@ import pymupdf
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-DOCUMENTS_PATH = BASE_DIR / "documents"
+DOCUMENTS_PATH = BASE_DIR / "Documents" if (BASE_DIR / "Documents").exists() else BASE_DIR / "documents"
 
 def load_pdfs():
 

@@ -1,5 +1,11 @@
 import ollama
-from chunk import create_chunks
+
+try:
+    from backend.rag.chunk import create_chunks
+    from backend.config import EMBED_MODEL
+except ModuleNotFoundError:
+    from chunk import create_chunks
+    from config import EMBED_MODEL
 
 
 def create_embeddings():
@@ -11,7 +17,7 @@ def create_embeddings():
     for chunk in chunks:
 
         response = ollama.embed(
-            model="nomic-embed-text",
+            model=EMBED_MODEL,
             input=chunk["text"]
         )
 

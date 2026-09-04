@@ -1,4 +1,7 @@
-from load_pdf import load_pdfs
+try:
+    from backend.rag.load_pdf import load_pdfs
+except ModuleNotFoundError:
+    from load_pdf import load_pdfs
 
 CHUNK_SIZE = 500
 OVERLAP = 100

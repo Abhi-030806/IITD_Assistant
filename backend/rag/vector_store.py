@@ -1,7 +1,13 @@
 import chromadb
-from embedding import create_embeddings
 
-client = chromadb.PersistentClient(path="../chroma_db")
+try:
+    from backend.rag.embedding import create_embeddings
+    from backend.config import CHROMA_PATH
+except ModuleNotFoundError:
+    from embedding import create_embeddings
+    from config import CHROMA_PATH
+
+client = chromadb.PersistentClient(path=CHROMA_PATH)
 
 collection = client.get_or_create_collection(
     name="iitd_documents"
