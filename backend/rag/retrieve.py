@@ -2,7 +2,11 @@ import os
 import chromadb
 import ollama
 
-CHROMA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../chroma_db"))
+try:
+    from backend.config import CHROMA_PATH, EMBED_MODEL
+except ModuleNotFoundError:
+    from config import CHROMA_PATH, EMBED_MODEL
+
 client = chromadb.PersistentClient(path=CHROMA_PATH)
 
 collection = client.get_collection("iitd_documents")
@@ -11,7 +15,7 @@ collection = client.get_collection("iitd_documents")
 def retrieve(query, n_results=3):
 
     response = ollama.embed(
-        model="nomic-embed-text",
+        model=EMBED_MODEL,
         input=query
     )
 

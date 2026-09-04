@@ -5,8 +5,10 @@ import ollama
 
 try:
     from backend.rag.retrieve import retrieve
+    from backend.config import LLM_MODEL
 except ModuleNotFoundError:
     from rag.retrieve import retrieve
+    from config import LLM_MODEL
 
 app = FastAPI()
 
@@ -54,7 +56,7 @@ Question:
 """
 
     response = ollama.chat(
-        model="qwen2.5:3b",
+        model=LLM_MODEL,
         messages=[
             {
                 "role": "user",
