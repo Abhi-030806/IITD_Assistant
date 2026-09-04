@@ -3,7 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import ollama
 
-from rag.retrieve import retrieve
+try:
+    from backend.rag.retrieve import retrieve
+except ModuleNotFoundError:
+    from rag.retrieve import retrieve
 
 app = FastAPI()
 
@@ -17,6 +20,11 @@ app.add_middleware(
 
 class ChatRequest(BaseModel):
     message: str
+
+
+@app.get("/")
+def health_check():
+    return {"status": "ok", "message": "IITD Assistant API is running"}
 
 
 @app.post("/chat")

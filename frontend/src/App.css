@@ -86,6 +86,10 @@ input {
   border-radius: 50%;
 }
 
+.status-dot.offline {
+  background: #ef4444;
+}
+
 
 /* Chat */
 

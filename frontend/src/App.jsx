@@ -1,11 +1,33 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
+
+const API_BASE = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 function App() {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
+
+  const checkHealth = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/`);
+      if (res.ok) {
+        setIsOnline(true);
+      } else {
+        setIsOnline(false);
+      }
+    } catch (e) {
+      setIsOnline(false);
+    }
+  };
+
+  useEffect(() => {
+    checkHealth();
+    const interval = setInterval(checkHealth, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   const sendMessage = async () => {
     if (!message.trim() || loading) return;
@@ -24,7 +46,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/chat", {
+      const response = await fetch(`${API_BASE}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -33,6 +55,10 @@ function App() {
           message: userMessage,
         }),
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const data = await response.json();
 
@@ -43,12 +69,14 @@ function App() {
           content: data.reply,
         },
       ]);
+      setIsOnline(true);
     } catch (error) {
+      setIsOnline(false);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "Sorry, I couldn't connect to the server.",
+          content: "Sorry, I couldn't connect to the backend server. Please make sure the FastAPI server is running.",
         },
       ]);
     } finally {
@@ -70,8 +98,8 @@ function App() {
         </div>
 
         <div className="status">
-          <span className="status-dot"></span>
-          Online
+          <span className={`status-dot ${isOnline ? "" : "offline"}`}></span>
+          {isOnline ? "Online" : "Offline"}
         </div>
       </header>
 

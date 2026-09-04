@@ -1,7 +1,9 @@
+import os
 import chromadb
 import ollama
 
-client = chromadb.PersistentClient(path="../chroma_db")
+CHROMA_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../chroma_db"))
+client = chromadb.PersistentClient(path=CHROMA_PATH)
 
 collection = client.get_collection("iitd_documents")
 
